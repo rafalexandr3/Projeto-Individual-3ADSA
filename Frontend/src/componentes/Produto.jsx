@@ -1,10 +1,11 @@
 import { useState } from "react";
+import styles from "./Produto.module.css";
 
 function Produto() {
     const [nome, setNome] = useState("");
     const [descricao, setDescricao] = useState("");
     const [preco, setPreco] = useState("");
-    const [quantidade, setQuantidade] = useState("");
+    const [disponibilidade, setDisponibilidade] = useState("");
     const [tipo, setTipo] = useState("");
     const [mensagem, setMensagem] = useState("");
 
@@ -15,7 +16,7 @@ function Produto() {
     async function cadastrarProduto() {
         //  └─ sem (e) aqui: nada a tratar, o valor já está no estado
         const resposta = await fetch(
-            "http://localhost:8080/produto",
+            "http://localhost:8080/produtos",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -24,7 +25,7 @@ function Produto() {
                         nome: nome,
                         descricao: descricao,
                         preco: preco,
-                        quantidade: quantidade,
+                        disponibilidade: disponibilidade,
                         tipo: tipo
                     }
                 )
@@ -46,66 +47,79 @@ function Produto() {
         //      └─ a resposta do servidor vira estado — e vira tela
     }
 
-    return (
-        <div>
 
-            <h2>Cadastrar produto novo!</h2>
-            <div>
-                Nome do produto: <br></br>
+    return (
+         <div className={styles.container}>
+
+            <h2 className={styles.titulo}>
+                Cadastrar novo produto
+            </h2>
+
+            <div className={styles.formulario}>
+
+                <label>Nome do produto:</label>
                 <input
                     type="text"
-                    placeholder="ex: Cheeseburguer"
+                    placeholder="Ex: Cheeseburger"
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                 />
-                <br />
 
-                Descrição do produto: <br />
+                <label>Descrição do produto:</label>
                 <input
                     type="text"
-                    placeholder="ex: Hamburguer com queijo"
+                    placeholder="Ex: Hambúrguer com queijo"
                     value={descricao}
                     onChange={(e) => setDescricao(e.target.value)}
-                /><br />
+                />
 
-                Preço do Produto:<br />
-                <input
-                    type="textx"
-                    placeholder="ex:20.00"
-                    value={preco}
-                    onChange={(e) => setPreco(e.target.value)}
-                /><br />
-
-                Quantidade do produto:<br />
+                <label>Preço do produto:</label>
                 <input
                     type="number"
-                    placeholder="ex: 2"
-                    value={quantidade}
-                    onChange={(e) => setQuantidade(e.target.value)}
-                /><br />
+                    step="0.01"
+                    placeholder="Ex: 20.00"
+                    value={preco}
+                    onChange={(e) => setPreco(e.target.value)}
+                />
 
-                Tipo do produto: <br />
-                <select value={tipo} onChange={mudarTipo}>
+                <label>Disponibilidade:</label>
+                <select
+                    value={disponibilidade}
+                    onChange={(e) =>
+                        setDisponibilidade(e.target.value === "true")
+                    }
+                >
+                    <option value="true">Disponível</option>
+                    <option value="false">Indisponível</option>
+                </select>
+
+                <label>Tipo do produto:</label>
+                <select
+                    value={tipo}
+                    onChange={mudarTipo}
+                >
+                    <option value="">Escolha um tipo</option>
                     <option value="lanche">Lanche</option>
                     <option value="bebida">Bebida</option>
                     <option value="sobremesa">Sobremesa</option>
                     <option value="refeicao">Refeição</option>
-                </select><br />
+                </select>
 
-                {/* <input
-                type="text"
-                placeholder="Escolha o tipo"
-                value={tipo}
-                onChange={(e) => setDescricao(e.target.value)}/> */
-                }
+                <button
+                    className={styles.botao}
+                    onClick={cadastrarProduto}
+                >
+                    Cadastrar produto
+                </button>
+
+                <p className={styles.mensagem}>
+                    {mensagem}
+                </p>
 
             </div>
 
-
-            <button onClick={cadastrarProduto}>Enviar</button>
-            <p>{mensagem}</p>
         </div>
-    )
+    );
 }
 
 export default Produto;

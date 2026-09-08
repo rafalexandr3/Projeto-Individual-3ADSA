@@ -1,0 +1,80 @@
+.container {
+    width: 1100px;
+    margin: 40px auto;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.botao {
+    display: block;
+    margin: 0 auto 25px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: #222;
+    color: white;
+    cursor: pointer;
+}
+
+.botao:hover {
+    background-color: #444;
+}
+
+.botao:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+.lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: rgba(80, 69, 69, 0.585);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.erro {
+    text-align: center;
+    color: red;
+}
+
+.carregando {
+    text-align: center;
+}
+
+.acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.botaoExcluir {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: black;
+}
+
+.botaoAlterar {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}

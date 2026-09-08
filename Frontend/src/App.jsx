@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import Produto from './componentes/Produto'
+import ListarProdutos from './componentes/ListarProdutos'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     <div>
          <div>
            <Produto />
+           <ListarProdutos/>
         </div>
     </div>
 

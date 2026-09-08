@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/produtos")
 public class ProdutoController {
 
 
@@ -24,7 +24,7 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listarJogos(){
+    public ResponseEntity<List<Produto>> listarProdutos(){
         String sql = "SELECT * FROM produto";
         List<Produto> jogos = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Produto.class));
         return ResponseEntity.status(200).body(jogos);
@@ -34,11 +34,11 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<Produto> cadastrar(@RequestBody Produto novoProduto){
 
-        String sql = "INSERT INTO produto (nome,descricao,preco,quantidade,tipo) VALUES (?,?,?,?,?);";
+        String sql = "INSERT INTO produto (nome,descricao,preco,disponibilidade,tipo) VALUES (?,?,?,?,?);";
 
 
         if(!verificarCampos(novoProduto.getNome(), novoProduto.getDescricao(), novoProduto.getPreco(),
-                novoProduto.getQuantidade(), novoProduto.getTipo() )){
+                novoProduto.getDisponibilidade(), novoProduto.getTipo() )){
             return  ResponseEntity.status(400).build();
         }
 
@@ -48,8 +48,8 @@ public class ProdutoController {
 
             ps.setString(1,novoProduto.getNome());
             ps.setString(2,novoProduto.getDescricao());
-            ps.setInt(3,novoProduto.getPreco());
-            ps.setInt(4,novoProduto.getQuantidade());
+            ps.setDouble(3,novoProduto.getPreco());
+            ps.setBoolean(4,novoProduto.getDisponibilidade());
             ps.setString(5,novoProduto.getTipo());
 
             return  ps;
@@ -63,18 +63,40 @@ public class ProdutoController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Produto> deletarPorID(@PathVariable Integer id){
 
+        String sql = "Delete from produto where id = ?";
+
+        if (!pesquisarPorID(id)){
+            return ResponseEntity.status(404).build();
+        }
+
+        jdbcTemplate.update(sql,id);
+        return ResponseEntity.status(204).build();      
+    }
 
 
     // metodos auxiliares
 
-    public Boolean verificarCampos(String nome, String descricao, Integer preco, Integer quantidade,String tipo){
+    public Boolean verificarCampos(String nome, String descricao, Double preco, Boolean disponibilidade,String tipo) {
 
 
         return nome != null && !nome.isBlank() &&
                 descricao != null && !descricao.isBlank() &&
                 preco != null && preco > 0 &&
-                quantidade != null && quantidade >= 0 &&
-                tipo != null;
+                disponibilidade != null &&
+                tipo != null && !tipo.isBlank();
+    }
+
+    public Boolean pesquisarPorID(Integer id){
+
+        String sql = "Select count (*) from produto where id = ?";
+
+        Integer countId = jdbcTemplate.queryForObject(sql, Integer.class,id);
+
+        Boolean existePorId = countId == 1;
+
+        return existePorId;
     }
 }
