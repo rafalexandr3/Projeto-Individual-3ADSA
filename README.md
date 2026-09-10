@@ -37,7 +37,7 @@ A consulta dos produtos também é realizada através da API, garantindo que as 
 
 ## Banco de dados
 
-* MySQL
+* H2
 
 ## Versionamento
 
