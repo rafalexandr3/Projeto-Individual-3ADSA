@@ -6,6 +6,7 @@
 .titulo {
     text-align: center;
     margin-bottom: 20px;
+    color: white;
 }
 
 .botao {
@@ -39,7 +40,7 @@
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: rgba(80, 69, 69, 0.585);
+    background-color:   rgb(214, 202, 202);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 

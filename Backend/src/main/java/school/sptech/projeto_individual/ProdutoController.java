@@ -73,7 +73,7 @@ public class ProdutoController {
         }
 
         jdbcTemplate.update(sql,id);
-        return ResponseEntity.status(204).build();      
+        return ResponseEntity.status(204).build();
     }
 
 
